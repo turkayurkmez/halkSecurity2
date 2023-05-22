@@ -36,6 +36,32 @@ namespace DataProtectionOnServer.Security
             return length;
         }
 
+        public string DecryptData(int length)
+        {
+            FileStream fileStream = new FileStream(path, FileMode.Open);
+            byte[] decryptData = decryptDataFromFile(fileStream, entropy, DataProtectionScope.CurrentUser, length);
+            fileStream.Close();
+            return Encoding.UTF8.GetString(decryptData);
+        }
+
+        private byte[] decryptDataFromFile(FileStream fileStream, byte[] entropy, DataProtectionScope currentUser, int length)
+        {
+            byte[] inputBuffer = new byte[length];
+            byte[] outputBuffer;
+
+            if (fileStream.CanRead)
+            {
+                fileStream.Read(inputBuffer, 0, inputBuffer.Length);
+                outputBuffer = ProtectedData.Unprotect(inputBuffer, entropy, currentUser);
+            }
+            else
+            {
+                throw new IOException("Stream okuanadı!");
+            }
+
+            return outputBuffer;
+        }
+
         private int encryptDataToFile(byte[] encoded, byte[] entropy, DataProtectionScope currentUser, FileStream fileStream)
         {
             var encryptedData = ProtectedData.Protect(encoded, entropy, currentUser);

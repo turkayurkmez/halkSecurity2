@@ -1,33 +1,25 @@
-﻿using DataProtectionOnServer.Models;
-using DataProtectionOnServer.Security;
+﻿using ClaimBasedAuthtantication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace DataProtectionOnServer.Controllers
+namespace ClaimBasedAuthtantication.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IHostEnvironment _environment;
 
-        public HomeController(ILogger<HomeController> logger, IHostEnvironment hostEnvironment)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _environment = hostEnvironment;
         }
 
         public IActionResult Index()
         {
-            string amanCokGizliCumle = "Aman cok gizli sifre falan var";
-            DataProtector protector = new DataProtector(_environment.ContentRootPath);
-            var length = protector.EncryptData(amanCokGizliCumle);
-
-            var decrypData = protector.DecryptData(length);
-
-            ViewBag.Data = decrypData;
             return View();
         }
 
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
