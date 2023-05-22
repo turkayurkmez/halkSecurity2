@@ -15,7 +15,10 @@ public partial class _Default : Page
 
         SqlConnection sqlConnection = new SqlConnection("Data Source=(localdb)\\Mssqllocaldb;Initial Catalog=Northwind;Integrated Security=True");
 
-        SqlCommand command = new SqlCommand($"SELECT * FROM Employees WHERE FirstName ='{TextBoxUserName.Text}' AND LastName ='{TextBoxPassword.Text}'", sqlConnection);
+        SqlCommand command = new SqlCommand($"SELECT * FROM Employees WHERE FirstName =@name AND LastName =@password", sqlConnection);
+        command.Parameters.AddWithValue("@name", TextBoxUserName.Text);
+        command.Parameters.AddWithValue("@password", TextBoxPassword.Text);
+
 
         sqlConnection.Open();
         SqlDataReader reader = command.ExecuteReader();
