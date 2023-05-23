@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <iframe src="https://www.hurriyet.com.tr"></iframe>
     <button id="hava">Hava durumunu getir!</button>
     <div id="durum">
         <ul id="list">
@@ -24,7 +25,8 @@
                     url: 'https://localhost:7044/WeatherForecast',
                     type: 'GET',
                     headers: {
-                        'Authorization': 'Basic ' + btoa('admin:123456')
+                        //'Authorization': 'Basic ' + btoa('admin:123456'),
+                        'Authorization': 'Bearer [JWT TOKEN]' 
                     },
                     success: function (data) {
                         $.each(data, function (index, element) {
