@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "OnlyAdminAndEditor";
+}
+<p>Merhaba @User.Identity.Name</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>Hoş geldiniz... Ne yapmak istersiniz (Kullanıcı İşlemleri, Kategori işlemleri vs)</p>
+}
+else if (User.IsInRole("Editor"))
+{
+    <p>Hoş geldiniz... Ne yapmak istersiniz (Ürün fiyat güncelleme, ürün detay değiştirme)</p>
+
+}
+
+

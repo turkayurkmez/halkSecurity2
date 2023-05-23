@@ -30,5 +30,11 @@ namespace ClaimBasedAuthtantication.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Authorize(Roles = "Admin,Editor")]
+        public IActionResult OnlyAdminAndEditor()
+        {
+            return View();
+        }
     }
 }

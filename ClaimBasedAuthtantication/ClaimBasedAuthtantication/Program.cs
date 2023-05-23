@@ -1,3 +1,4 @@
+using ClaimBasedAuthtantication.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                     config.AccessDeniedPath = "/Users/AccessDenied";
                     config.ReturnUrlParameter = "gidilecekSayfa";
                 });
+
+builder.Services.AddScoped<UserService>();
 
 
 var app = builder.Build();
