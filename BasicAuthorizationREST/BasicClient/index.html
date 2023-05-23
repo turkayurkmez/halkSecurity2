@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="hava">Hava durumunu getir!</button>
+    <div id="durum">
+        <ul id="list">
+
+        </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#hava').on('click', function () {
+                $.ajax({
+                    url: 'https://localhost:7044/WeatherForecast',
+                    type: 'GET',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('admin:123456')
+                    },
+                    success: function (data) {
+                        $.each(data, function (index, element) {
+                            let li = $('<li>' + element.date + ' ' + element.summary + '(' + element.temperatureC + ')</li>');
+                            $('#list').append(li);
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+
+                    }
+                })
+            });
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
